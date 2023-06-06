@@ -1,7 +1,7 @@
-#!/usr/bin/python3
-import py_compile, os
+#!/bin/bash
 
-file = os.environ.get("PYFILE")
-print(f"Compiling {file} ...")
-compiled = os.environ.get("PYFILE") + "c"
-py_compile.compile(os.environ.get("PYFILE"), cfile=compiled)
+echo "Compiling $PYFILE ..."
+python3 -m py_compile "$PYFILE"
+file=$PYFILE
+file+="c"
+mv $PYFILE $file
