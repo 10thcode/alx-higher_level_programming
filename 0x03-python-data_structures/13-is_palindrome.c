@@ -1,6 +1,5 @@
 #include "lists.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 /**
  * is_palindrome - a function in C that checks if a
@@ -13,10 +12,11 @@
 int is_palindrome(listint_t **head)
 {
 	int len = get_list_lenght(*head);
-	int i, j;
+	int i;
+	listint_t *start = *head;
 
-	for (i = 0, j = len - 1; i < len / 2; i++, j--)
-		if (get_list_item(*head, i) != get_list_item(*head, j))
+	for (i = len - 1; i > len / 2; i--, start = start->next)
+		if (start->n != get_list_item(*head, i))
 			return (0);
 
 	return (1);
