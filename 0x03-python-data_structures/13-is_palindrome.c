@@ -1,56 +1,36 @@
 #include "lists.h"
-#include <stdlib.h>
 
 /**
- * is_palindrome - a function in C that checks if a
- * singly linked list is a palindrome.
- *
- * @head: a pointer to the head of the list
- *
+ * is_palindrome - a function that checks if
+ * a singly linked list is a palindrome.
+ * @head: a pointer to the head node of the list.
  * Return: 0 if it is not a palindrome, 1 if it is a palindrome
  */
 int is_palindrome(listint_t **head)
 {
-	int len = get_list_lenght(*head);
-	int i;
-	listint_t *start = *head;
+	listint_t *previous = NULL, *current = *head, *tail = *head, *l1, *l2;
 
-	for (i = len - 1; i > len / 2; i--, start = start->next)
-		if (start->n != get_list_item(*head, i))
+	if (*head == NULL || (*head)->next == NULL)
+		return (1);
+
+	while (tail != NULL && tail->next != NULL)
+	{
+		tail = tail->next->next;
+		*head = (*head)->next;
+		current->next = previous;
+		previous = current;
+		current = *head;
+	}
+
+	l1 = previous;
+	if (tail == NULL)
+		l2 = current;
+	else
+		l2 = current->next;
+
+	for (; l1 != NULL; l1 = l1->next, l2 = l2->next)
+		if (l1->n != l2->n)
 			return (0);
 
 	return (1);
-}
-
-/**
- * get_list_lenght - get the number of node in a linked list
- * @head: the head node of the list
- * Return: the number of nodes in list
- */
-int get_list_lenght(listint_t *head)
-{
-	if (head == NULL)
-		return (0);
-
-	if (head->next == NULL)
-		return (1);
-
-	return (get_list_lenght(head->next) + 1);
-}
-
-/**
- * get_list_item - get item from a linked list
- * @head: the head node of the list
- * @index: the position to retrieve item
- * Return: the item at index
- */
-int get_list_item(listint_t *head, int index)
-{
-	int i;
-
-	for (i = 0; head != NULL; head = head->next, i++)
-		if (i == index)
-			return (head->n);
-
-	return (-1);
 }
