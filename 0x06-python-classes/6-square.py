@@ -12,7 +12,7 @@ class Square:
             size (int): size of a square
             position (Tuple[int]): position of a square
         """
-        if type(size) == int:
+        if type(size) is int:
             if size >= 0:
                 self.__size = size
             else:
@@ -37,7 +37,7 @@ class Square:
         Args:
             value (int): the value to assign to __size
         """
-        if type(value) == int:
+        if type(value) is int:
             if value >= 0:
                 self.__size = value
             else:
@@ -58,7 +58,9 @@ class Square:
         Args:
             value (tuple[int]): Position where square should be printed
         """
-        if type(value) == tuple and len(value) == 2 and min(value) >= 0:
+        if type(value) is tuple and len(value) == 2 and \
+                type(value[0]) is int and type(value[1]) is int \
+                and min(value) >= 0:
             self.__position = value
         else:
             raise TypeError("position must be a tuple of 2 positive integers")
