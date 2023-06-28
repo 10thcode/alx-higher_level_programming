@@ -32,7 +32,7 @@ class Square:
     @size.setter
     def size(self, value):
         """
-        Retrieve __size attribute
+        Sets  __size attribute
 
         Args:
             value (int): the value to assign to __size
@@ -52,6 +52,12 @@ class Square:
 
     @position.setter
     def position(self, value):
+        """
+        Sets __position attribut
+
+        Args:
+            value (tuple[int]): Position where square should be printed
+        """
         if len(value) == 2 and min(value) >= 0:
             self.__position = value
         else:
