@@ -12,14 +12,8 @@ class Node:
             data (int): value of the node
             next_node (Node): the next node
         """
-        if type(data) == int:
-            self.__data = data
-        else:
-            raise TypeError("data must be an integer")
-        if type(next_node) == Node or next_node is None:
-            self.__next_node = next_node
-        else:
-            raise TypeError("next_node must be a Node object")
+        self.data = data
+        self.next_node = next_node
 
     @property
     def data(self):
@@ -34,7 +28,10 @@ class Node:
         Args:
             value (int): the value to be assigned to data
         """
-        self.__data = value
+        if type(value) is int:
+            self.__data = value
+        else:
+            raise TypeError("data must be an integer")
 
     @property
     def next_node(self):
@@ -49,7 +46,10 @@ class Node:
         Args:
             value (Node): the next node of the linked list
         """
-        self.__next_node = value
+        if type(value) is Node or value is None:
+            self.__next_node = value 
+        else:
+            raise TypeError("next_node must be a Node object")
 
 
 class SinglyLinkedList:
@@ -78,7 +78,7 @@ class SinglyLinkedList:
 
             # if list is empty
             if self.__head is None:
-                new_node = Node(value)
+                new_node = Node(value, None)
                 self.__head = new_node
                 return None
 
@@ -99,7 +99,7 @@ class SinglyLinkedList:
 
             # value is bigger that all element in the list
             # therefore, value should be inserted at the end of the list
-            new_node = Node(value)
+            new_node = Node(value, None)
             node.next_node = new_node
         else:
             raise TypeError("data must be an integer")
