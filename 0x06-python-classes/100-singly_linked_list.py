@@ -47,7 +47,7 @@ class Node:
             value (Node): the next node of the linked list
         """
         if type(value) is Node or value is None:
-            self.__next_node = value 
+            self.__next_node = value
         else:
             raise TypeError("next_node must be a Node object")
 
