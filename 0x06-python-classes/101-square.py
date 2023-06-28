@@ -18,13 +18,13 @@ class Square:
     def __str__(self):
         """ Prints a square on stdout """
         squares = ""
-        for i in range(0, self.__position[1]):
+        if self.size == 0:
+            return squares
+        for i in range(0, self.position[1]):
             squares += "\n"
-        for i in range(0, self.__size):
-            squares += (" " * self.__position[0]) + ("#" * self.__size)
-            if i + 1 != self.__size:
-                squares += "\n"
-        return squares
+        for i in range(0, self.size):
+            squares += (" " * self.position[0]) + ("#" * self.size) + "\n"
+        return squares[:-1]
 
     @property
     def size(self):
@@ -73,13 +73,14 @@ class Square:
         Return:
             int: Area of a square
         """
-        return self.__size ** 2
+        return self.size ** 2
 
     def my_print(self):
         """ Prints a square on stdout """
-        for i in range(0, self.__position[1]):
+        if self.size == 0:
             print()
-        for i in range(0, self.__size):
-            print("{}{}".format(" " * self.__position[0], "#" * self.__size))
-        if self.__size == 0:
+            return None
+        for i in range(0, self.position[1]):
             print()
+        for i in range(0, self.size):
+            print("{}{}".format(" " * self.position[0], "#" * self.size))
