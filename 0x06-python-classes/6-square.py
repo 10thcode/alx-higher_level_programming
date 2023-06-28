@@ -53,7 +53,7 @@ class Square:
     @position.setter
     def position(self, value):
         """
-        Sets __position attribut
+        Sets __position attribute
 
         Args:
             value (tuple[int]): Position where square should be printed
