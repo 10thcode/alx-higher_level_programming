@@ -58,7 +58,7 @@ class Square:
         Args:
             value (tuple[int]): Position where square should be printed
         """
-        if len(value) == 2 and min(value) >= 0:
+        if type(value) == tuple and len(value) == 2 and min(value) >= 0:
             self.__position = value
         else:
             raise TypeError("position must be a tuple of 2 positive integers")
@@ -74,9 +74,10 @@ class Square:
 
     def my_print(self):
         """ Prints a square on stdout """
+        if self.__size == 0:
+            print()
+            return None
         for i in range(0, self.__position[1]):
             print()
         for i in range(0, self.__size):
             print("{}{}".format(" " * self.__position[0], "#" * self.__size))
-        if self.__size == 0:
-            print()
