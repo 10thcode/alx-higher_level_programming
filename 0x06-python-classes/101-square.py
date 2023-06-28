@@ -33,8 +33,6 @@ class Square:
             squares += (" " * self.__position[0]) + ("#" * self.__size)
             if i + 1 != self.__size:
                 squares += "\n"
-        if self.__size == 0:
-            squares += "\n"
         return squares
 
     @property
@@ -65,6 +63,12 @@ class Square:
 
     @position.setter
     def position(self, value):
+        """ 
+        Set __position attribute
+
+        Args:
+            value (tuple[int]): Position to print the square
+        """
         if len(value) == 2 and min(value) >= 0:
             self.__position = value
         else:
