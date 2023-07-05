@@ -6,11 +6,17 @@ This module contain a function that divide all element of a metrix
 """
 
 
-def matrix_divided(matrix, div):
+def matrix_divided(matrix=[[]], div=1):
     """
     A function that divides all elements of a matrix.
     """
-    if type(matrix) is not list:
+    if div != div or div == float("inf") or \
+            div == -float("inf") or type(div) not in [int, float]:
+        raise TypeError("div must be a number")
+    if div == 0:
+        raise ZeroDivisionError("division by zero")
+    if type(matrix) is not list or len(matrix) == 0 or \
+            type(matrix[0]) is not list:
         raise TypeError("matrix must be a matrix" +
                         " (list of lists) of integers/floats")
     new_matrix = []
@@ -25,10 +31,6 @@ def matrix_divided(matrix, div):
             if type(element) not in [int, float]:
                 raise TypeError("matrix must be a matrix" +
                                 " (list of lists) of integers/floats")
-            if type(div) not in [int, float]:
-                raise TypeError("div must be a number")
-            if div == 0:
-                raise ZeroDivisionError("division by zero")
             new_item.append(round(element / div, 2))
         new_matrix.append(new_item)
     return new_matrix
