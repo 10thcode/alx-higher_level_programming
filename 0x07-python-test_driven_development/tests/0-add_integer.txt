@@ -37,3 +37,13 @@ Test Case 7
 Test Case 8
 	>>> add_integer(99999999393939399939390, 9)
 	99999999393939399939399
+
+Test Case 9
+	>>> add_integer(float("nan"), 9)
+	Traceback (most recent call last):
+	TypeError: a must be an integer
+
+Test Case 10
+	>>> add_integer(0, float("nan"))
+	Traceback (most recent call last):
+	TypeError: b must be an integer

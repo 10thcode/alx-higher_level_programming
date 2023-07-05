@@ -10,8 +10,11 @@ def add_integer(a, b=98):
     """
     A function that adds 2 integers.
     """
-    if type(a) not in [int, float]:
+    if a != a or type(a) not in [int, float]:
         raise TypeError("a must be an integer")
-    if type(b) not in [int, float]:
+    if b != b or type(b) not in [int, float]:
         raise TypeError("b must be an integer")
-    return int(a) + int(b)
+    result = int(a) + int(b)
+    if result == float("inf") or result == -float("inf"):
+        raise ValueError("float overflow")
+    return result
