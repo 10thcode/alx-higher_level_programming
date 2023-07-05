@@ -1,0 +1,39 @@
+======================
+INTEGER ADDITION TESTS
+======================
+
+Raise TypeError when first arg is not an int
+	>>> add_integer = __import__("0-add_integer").add_integer
+	>>> add_integer([2, 3], 4)
+	Traceback (most recent call last):
+	TypeError: a must be an integer
+
+Raise TypeError when second arg is not an int
+	>>> add_integer(2, (3, 4))
+	Traceback (most recent call last):
+	TypeError: b must be an integer
+
+Testing if both args are not int
+	>>> add_integer("2", (3, 4))
+	Traceback (most recent call last):
+	TypeError: a must be an integer
+
+Testing if no value is passed as b
+	>>> add_integer(4)
+	102
+
+Testing if correct input is passed 
+	>>> add_integer(4, 4)
+	8
+
+Testing if negetive value is passed 
+	>>> add_integer(4, -4)
+	0
+
+Testing if -0 is passed as an arg 
+	>>> add_integer(0, -0)
+	0
+
+Testing if a large number is passed as input 
+	>>> add_integer(99999999393939399939390, 9)
+	99999999393939399939399
