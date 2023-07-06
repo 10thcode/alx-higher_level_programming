@@ -6,7 +6,7 @@ This module define a function that prints a square with the character #.
 """
 
 
-def print_square(size):
+def print_square(size=1):
     """
     A function that prints a square with the character #.
     """
