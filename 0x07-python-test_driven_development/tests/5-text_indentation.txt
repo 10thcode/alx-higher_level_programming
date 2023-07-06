@@ -8,3 +8,18 @@ Test Case 1
 	>>> text_indentation(12)
 	Traceback (most recent call last):
 	TypeError: text must be a string
+
+Test Case 2
+	>>> text_indentation("Correct String")
+	Correct String
+
+Test Case 3
+	>>> text_indentation("Correct. String")
+	Correct.
+	<BLANKLINE>
+	String
+
+Test Case 4
+	>>> text_indentation()
+	Traceback (most recent call last):
+	ValueError: no argument was passed

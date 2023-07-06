@@ -5,13 +5,15 @@ after each of these characters: ., ? and :
 """
 
 
-def text_indentation(text):
+def text_indentation(text=""):
     """
     A function that prints a text with 2 new lines
     after each of these characters: ., ? and :
     """
     if type(text) is not str:
         raise TypeError("text must be a string")
+    if text == "":
+        raise ValueError("no argument was passed")
     skip_space = True
     for letter in text:
         if letter == " " and skip_space:
