@@ -23,3 +23,30 @@ Test Case 4
 	>>> print(matrix_divided([[2, 4, 5], [2, 4]], 3))
 	Traceback (most recent call last):
 	TypeError: Each row of the matrix must have the same size
+
+Test Case 5
+	>>> print(matrix_divided([[2, 4], [2, 4]], 2))
+	[[1.0, 2.0], [1.0, 2.0]]
+
+Test Case 6
+	>>> print(matrix_divided([[2, 4], [2, 4]], "String"))
+	Traceback (most recent call last):
+	TypeError: div must be a number
+
+Test Case 7
+	>>> print(matrix_divided([[2, 4], [2, 4]], 0))
+	Traceback (most recent call last):
+	ZeroDivisionError: division by zero
+
+Test Case 8
+	>>> print(matrix_divided([[2, 4], [2, 4]], float("inf")))
+	Traceback (most recent call last):
+	TypeError: div must be a number
+
+Test Case 9
+	>>> print(matrix_divided([[2, 4], [2, 4]]))
+	[[2.0, 4.0], [2.0, 4.0]]
+
+Test Case 10
+	>>> print(matrix_divided())
+	[[]]
