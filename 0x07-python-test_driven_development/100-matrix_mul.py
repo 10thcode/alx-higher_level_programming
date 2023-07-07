@@ -36,32 +36,34 @@ def matrix_mul(m_a=[[]], m_b=[[]]):
     b_col_size = len(m_b)
 
     for li in m_a:
+        if type(li) is not list:
+            raise TypeError("m_a must be a list of lists")
         if len(li) != a_row_size:
             raise TypeError("each row of m_a must be of the same size")
+        for i in li:
+            if type(i) not in [int, float]:
+                raise TypeError("m_a should contain " +
+                                "only integers or floats")
     for li in m_b:
+        if type(li) is not list:
+            raise TypeError("m_b must be a list of lists")
         if len(li) != b_row_size:
             raise TypeError("each row of m_b must be of the same size")
+        for i in li:
+            if type(i) not in [int, float]:
+                raise TypeError("m_b should contain " +
+                                "only integers or floats")
     if a_row_size != b_col_size:
         raise ValueError("m_a and m_b can't be multiplied")
 
     m_c = []
     for li in m_a:
-        if type(li) is not list:
-            raise TypeError("m_a must be a list of lists")
         j = 0
         inner = []
         while j < b_row_size:
             i = 0
             s = 0
             while i < a_row_size:
-                if type(m_b[i]) is not list:
-                    raise TypeError("m_b must be a list of lists")
-                if type(li[i]) not in [int, float]:
-                    raise TypeError("m_a should contain " +
-                                    "only integers or floats")
-                if type(m_b[i][j]) not in [int, float]:
-                    raise TypeError("m_b should contain only " +
-                                    "integers or floats")
                 s += (li[i] * m_b[i][j])
                 i += 1
             inner.append(s)
