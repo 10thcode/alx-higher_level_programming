@@ -3,6 +3,7 @@
 This module defines a class Base
 """
 import json
+import csv
 from os import path
 
 
@@ -60,11 +61,12 @@ class Base():
         list_dictionaries = []
         filename = type(cls).__name__ + ".json"
 
-        for item in list_objs:
-            if not isinstance(item, cls):
-                raise TypeError()
+        if list_objs:
+            for item in list_objs:
+                if not isinstance(item, cls):
+                    raise TypeError()
 
-            list_dictionaries.append(item.to_dictionary())
+                list_dictionaries.append(item.to_dictionary())
 
         with open(filename, mode="w", encoding="utf-8") as file:
             file.write(cls.to_json_string(list_dictionaries))
@@ -112,11 +114,75 @@ class Base():
         """
         list_instances = []
         filename = cls.__name__ + ".json"
-        print(filename)
         if path.isfile(filename):
-            print("Hello")
             with open(filename, mode="r", encoding="utf-8") as file:
                 list_dict = cls.from_json_string(file.read())
                 for item in list_dict:
                     list_instances.append(cls.create(**item))
+        return list_instances
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """
+        Serialize CSV
+
+        Args:
+            list_objs: list of instances of Base class
+        """
+        if type(list_objs) is not None and not list:
+            raise TypeError()
+
+        filename = cls.__name__ + ".csv"
+
+        if list_objs:
+            with open(filename, mode="w", encoding="utf-8") as file:
+                writer = csv.writer(file)
+
+                for item in list_objs:
+                    if not isinstance(item, cls):
+                        raise TypeError()
+
+                    li = []
+                    li.append(item.id)
+
+                    if type(item).__name__ == "Rectangle":
+                        li.append(item.width)
+                        li.append(item.height)
+                    elif type(item).__name__ == "Square":
+                        li.append(item.size)
+
+                    li.append(item.x)
+                    li.append(item.y)
+                    writer.writerow(li)
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """
+        Deserialize CSV file
+
+        Return:
+            list:list of instances
+        """
+        filename = cls.__name__ + ".csv"
+        list_instances = []
+
+        if path.isfile(filename):
+            with open(filename, mode="r", encoding="utf8") as file:
+                reader = csv.reader(file)
+
+                for row in reader:
+                    d = {}
+                    d["id"] = int(row[0])
+
+                    if cls.__name__ == "Rectangle":
+                        d["width"] = int(row[1])
+                        d["height"] = int(row[2])
+                        d["x"] = int(row[3])
+                        d["y"] = int(row[4])
+                    elif cls.__name__ == "Square":
+                        d["size"] = int(row[1])
+                        d["x"] = int(row[2])
+                        d["y"] = int(row[3])
+
+                    list_instances.append(cls.create(**d))
         return list_instances
