@@ -56,11 +56,10 @@ class Base():
             list_objs: A list of instances who inherits of Base
         """
         list_dictionaries = []
-        filename = type(cls).__name__ + ".json"
+        filename = cls.__name__ + ".json"
 
-        if list_objs:
+        if list_objs and len(list_objs) != 0:
             for item in list_objs:
-
                 list_dictionaries.append(item.to_dictionary())
 
         with open(filename, mode="w") as file:
