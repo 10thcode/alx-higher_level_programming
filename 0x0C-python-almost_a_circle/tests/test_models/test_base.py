@@ -135,7 +135,21 @@ class TestBase(unittest.TestCase):
             dictionary = {"id": 21, "width": 3, "height": 3, "x": 0, "y": "Hi"}
             rect = Rectangle.create(**dictionary)
 
-    def test_create_method(self):
+        from models.square import Square
+
+        with self.assertRaises(TypeError):
+            dictionary = {"id": 21, "size": "Hello"}
+            square = Square.create(**dictionary)
+
+        with self.assertRaises(TypeError):
+            dictionary = {"id": 21, "size": 3, "x": "World"}
+            square = Square.create(**dictionary)
+
+        with self.assertRaises(TypeError):
+            dictionary = {"id": 21, "size": 3, "x": 0, "y": "Hi"}
+            square = Square.create(**dictionary)
+
+    def test_create_method_with_incorrect_values(self):
         """
         Test the create() classs method of Base class with incorrect values
         in the dictionary
@@ -157,6 +171,20 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(ValueError):
             dictionary = {"id": 21, "width": 3, "height": 0, "x": 1, "y": -2}
             rect = Rectangle.create(**dictionary)
+
+        from models.square import Square
+
+        with self.assertRaises(ValueError):
+            dictionary = {"id": 21, "size": -3}
+            square = Square.create(**dictionary)
+
+        with self.assertRaises(ValueError):
+            dictionary = {"id": 21, "size": 3, "x": -1}
+            square = Square.create(**dictionary)
+
+        with self.assertRaises(ValueError):
+            dictionary = {"id": 21, "size": 3, "x": 1, "y": -2}
+            square = Square.create(**dictionary)
 
     def test_create_method(self):
         """
