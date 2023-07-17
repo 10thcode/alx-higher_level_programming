@@ -55,20 +55,15 @@ class Base():
         Args:
             list_objs: A list of instances who inherits of Base
         """
-        if type(list_objs) is not None and not list:
-            raise TypeError()
-
         list_dictionaries = []
         filename = type(cls).__name__ + ".json"
 
         if list_objs:
             for item in list_objs:
-                if not isinstance(item, cls):
-                    raise TypeError()
 
                 list_dictionaries.append(item.to_dictionary())
 
-        with open(filename, mode="w", encoding="utf-8") as file:
+        with open(filename, mode="w") as file:
             file.write(cls.to_json_string(list_dictionaries))
 
     @staticmethod
