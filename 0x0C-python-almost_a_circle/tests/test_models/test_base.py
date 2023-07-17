@@ -52,6 +52,10 @@ class TestBase(unittest.TestCase):
         self.assertIsInstance(base.to_json_string([{2: 3, 3: 4}]), str)
 
     def test_to_json_string_method_return_value(self):
+        """
+        Test the return value of the to_json_string() static method of
+        Base class
+        """
         base = Base()
         self.assertEqual("[]", base.to_json_string(None))
         self.assertEqual("[]", base.to_json_string([]))
