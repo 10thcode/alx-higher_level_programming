@@ -82,7 +82,7 @@ class Base():
         Returns:
             The list of the JSON string representation json_string
         """
-        if type(json_string) is not str:
+        if type(json_string) is not None and not str:
             raise TypeError()
 
         if json_string:
