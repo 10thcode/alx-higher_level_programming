@@ -94,7 +94,10 @@ class Base():
         Returns:
            object: an instance of a class
         """
-        obj = cls(4, 3)
+        if cls.__name__ == "Rectangle":
+            obj = cls(4, 3)
+        elif cls.__name__ == "Square":
+            obj = cls(4)
         obj.update(**dictionary)
         return obj
 
