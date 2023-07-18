@@ -4,6 +4,8 @@ This module provides a test suite for Base class
 """
 import unittest
 from models.base import Base
+from models.rectangle import Rectangle
+from models.square import Square
 from os import path
 
 
@@ -26,13 +28,6 @@ class TestBase(unittest.TestCase):
         """
         with self.assertRaises(TypeError):
             base = Base(2, 4)
-
-    def test_private_attribute(self):
-        """
-        Test accessing private attribute of Base class
-        """
-        Base.__nb_objects = 11
-        self.assertEqual(Base.__nb_objects, 11)
 
     def test_to_json_string_method_with_incorrect_arg_type(self):
         """
@@ -73,15 +68,13 @@ class TestBase(unittest.TestCase):
         """
         Test the save_to_file() class method of Base class
         """
-        from models.rectangle import Rectangle
-        r1 = Rectangle(10, 7, 2, 8)
-        r2 = Rectangle(2, 4)
+        r1 = Rectangle(10, 7, 2, 8, 3)
+        r2 = Rectangle(2, 4, id=4)
         Rectangle.save_to_file([r1, r2])
         self.assertTrue(path.isfile("Rectangle.json"))
 
-        from models.square import Square
         s1 = Square(10, 7, 2, 8)
-        s2 = Square(2, 4)
+        s2 = Square(2, 4, id=4)
         Square.save_to_file([s1, s2])
         self.assertTrue(path.isfile("Square.json"))
 
@@ -89,7 +82,7 @@ class TestBase(unittest.TestCase):
         """
         Test the from_json_string() static method of Base class
         """
-        base = Base()
+        base = Base(5)
 
         with self.assertRaises(TypeError):
             base.from_json_string()
@@ -109,8 +102,6 @@ class TestBase(unittest.TestCase):
         Test the create() class method of Base class with incorrect types in
         the dictionary
         """
-        from models.rectangle import Rectangle
-
         with self.assertRaises(TypeError):
             dictionary = {"id": 21, "width": "Hello"}
             rect = Rectangle.create(**dictionary)
@@ -126,8 +117,6 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(TypeError):
             dictionary = {"id": 21, "width": 3, "height": 3, "x": 0, "y": "Hi"}
             rect = Rectangle.create(**dictionary)
-
-        from models.square import Square
 
         with self.assertRaises(TypeError):
             dictionary = {"id": 21, "size": "Hello"}
@@ -146,8 +135,6 @@ class TestBase(unittest.TestCase):
         Test the create() classs method of Base class with incorrect values
         in the dictionary
         """
-        from models.rectangle import Rectangle
-
         with self.assertRaises(ValueError):
             dictionary = {"id": 21, "width": -3}
             rect = Rectangle.create(**dictionary)
@@ -163,8 +150,6 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(ValueError):
             dictionary = {"id": 21, "width": 3, "height": 0, "x": 1, "y": -2}
             rect = Rectangle.create(**dictionary)
-
-        from models.square import Square
 
         with self.assertRaises(ValueError):
             dictionary = {"id": 21, "size": -3}
@@ -182,7 +167,6 @@ class TestBase(unittest.TestCase):
         """
         Test the create() class method of Base class
         """
-        from models.rectangle import Rectangle
         dictionary = {"id": 21, "width": 3, "height": 2, "x": 1, "y": 1}
         rect = Rectangle.create(**dictionary)
         self.assertEqual(rect.id, 21)
@@ -191,7 +175,6 @@ class TestBase(unittest.TestCase):
         self.assertEqual(rect.x, 1)
         self.assertEqual(rect.y, 1)
 
-        from models.square import Square
         dictionary = {"id": 33, "size": 2, "x": 5, "y": 3}
         square = Square.create(**dictionary)
         self.assertEqual(square.id, 33)
@@ -203,7 +186,6 @@ class TestBase(unittest.TestCase):
         """
         Test the load_from_file() class method of Base class
         """
-        from models.rectangle import Rectangle
         rect = Rectangle.load_from_file()
 
         self.assertIsInstance(rect, list)
