@@ -27,6 +27,13 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(TypeError):
             base = Base(2, 4)
 
+    def test_private_attribute(self):
+        """
+        Test accessing private attribute of Base class
+        """
+        Base.__nb_objects = 11
+        self.assertEqual(Base.__nb_objects, 11)
+
     def test_to_json_string_method_with_incorrect_arg_type(self):
         """
         Test the to_json_string() static method of Base class with incorrect
