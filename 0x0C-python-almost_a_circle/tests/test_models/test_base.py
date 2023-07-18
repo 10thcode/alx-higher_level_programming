@@ -68,6 +68,23 @@ class TestBase(unittest.TestCase):
         """
         Test the save_to_file() class method of Base class
         """
+        Rectangle.save_to_file(None)
+        self.assertTrue(path.isfile("Rectangle.json"))
+        if path.isfile("Rectangle.json"):
+            with open("Rectangle.json", mode="r", encoding="utf-8") as file:
+                output = file.read()
+                self.assertEqual(output, "[]")
+
+        Rectangle.save_to_file([])
+        self.assertTrue(path.isfile("Rectangle.json"))
+        if path.isfile("Rectangle.json"):
+            with open("Rectangle.json", mode="r", encoding="utf-8") as file:
+                output = file.read()
+                self.assertEqual(output, "[]")
+
+        Rectangle.save_to_file([Rectangle(1, 2)])
+        self.assertTrue(path.isfile("Rectangle.json"))
+
         r1 = Rectangle(10, 7, 2, 8, 3)
         r2 = Rectangle(2, 4, id=4)
         Rectangle.save_to_file([r1, r2])
