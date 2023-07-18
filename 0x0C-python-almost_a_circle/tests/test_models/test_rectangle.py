@@ -92,7 +92,13 @@ class TestRectangle(unittest.TestCase):
             rect = Rectangle(-4, 2, 4, 5)
 
         with self.assertRaises(ValueError):
+            rect = Rectangle(0, 2, 4, 5)
+
+        with self.assertRaises(ValueError):
             rect = Rectangle(10, 0, 0, 0)
+
+        with self.assertRaises(ValueError):
+            rect = Rectangle(10, -1, 0, 0)
 
         with self.assertRaises(ValueError):
             rect = Rectangle(2, 10, -2, 0)
@@ -110,7 +116,13 @@ class TestRectangle(unittest.TestCase):
             rect.width = 0
 
         with self.assertRaises(ValueError):
+            rect.width = -1
+
+        with self.assertRaises(ValueError):
             rect.height = -10
+
+        with self.assertRaises(ValueError):
+            rect.height = 0
 
         with self.assertRaises(ValueError):
             rect.x = -1
@@ -118,16 +130,61 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(ValueError):
             rect.y = -8
 
+    def test_exception_messages(self):
+        """
+        Test exception messages retured after raising an exception
+        """
+        try:
+            rect = Rectangle("2", 3)
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'width must be an integer')
+
+        try:
+            rect = Rectangle(-1, 3)
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'width must be > 0')
+
+        try:
+            rect = Rectangle(2, "3")
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'height must be an integer')
+
+        try:
+            rect = Rectangle(1, -3)
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'height must be > 0')
+
+        try:
+            rect = Rectangle(2, 3, "hello")
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'x must be an integer')
+
+        try:
+            rect = Rectangle(1, 3, -1)
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'x must be >= 0')
+
+        try:
+            rect = Rectangle(1, 3, 1, -2)
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'y must be >= 0')
+
+        try:
+            rect = Rectangle(2, 3, 4, "5")
+        except Exception as e:
+            self.assertEqual("{}".format(e), 'y must be an integer')
+
     def test_with_correct_types_and_values(self):
         """
         Test with correct types and values pass as arguments or
         set to Rectangle attributes
         """
-        rect = Rectangle(2, 3, 4, 5)
+        rect = Rectangle(2, 3, 4, 5, 12)
         self.assertEqual(rect.width, 2)
         self.assertEqual(rect.height, 3)
         self.assertEqual(rect.x, 4)
         self.assertEqual(rect.y, 5)
+        self.assertEqual(rect.id, 12)
 
         rect.width = 5
         self.assertEqual(rect.width, 5)
@@ -138,8 +195,17 @@ class TestRectangle(unittest.TestCase):
         rect.x = 2
         self.assertEqual(rect.x, 2)
 
-        rect.y = 3
-        self.assertEqual(rect.y, 3)
+        rect.x = 0
+        self.assertEqual(rect.x, 0)
+
+        rect.y = 0
+        self.assertEqual(rect.y, 0)
+
+        rect.y = 4
+        self.assertEqual(rect.y, 4)
+
+        rect.id = 9
+        self.assertEqual(rect.id, 9)
 
     def test_area_method(self):
         """
