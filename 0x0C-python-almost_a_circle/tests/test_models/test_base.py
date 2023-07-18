@@ -13,6 +13,13 @@ class TestBase(unittest.TestCase):
     """
     Test suite for Base class
     """
+    def test_with_no_arg(self):
+        """
+        Test with no argument passed to Base class
+        """
+        base = Base()
+        self.assertEqual(20, base.id)
+
     def test_with_one_arg(self):
         """
         Test with one argument passed to Base class
@@ -34,35 +41,31 @@ class TestBase(unittest.TestCase):
         Test the to_json_string() static method of Base class with incorrect
         argument type
         """
-        base = Base(34)
+        with self.assertRaises(TypeError):
+            Base.to_json_string()
 
         with self.assertRaises(TypeError):
-            base.to_json_string()
+            Base.to_json_string("Hello")
 
         with self.assertRaises(TypeError):
-            base.to_json_string("Hello")
-
-        with self.assertRaises(TypeError):
-            base.to_json_string([2, 2])
+            Base.to_json_string([2, 2])
 
     def test_to_json_string_method_return_type(self):
         """
         Test the return type of the to_json_string() static method of
         Base class
         """
-        base = Base(34)
-        self.assertIsInstance(base.to_json_string([{2: 3, 3: 4}]), str)
+        self.assertIsInstance(Base.to_json_string([{2: 3, 3: 4}]), str)
 
     def test_to_json_string_method_return_value(self):
         """
         Test the return value of the to_json_string() static method of
         Base class
         """
-        base = Base()
-        self.assertEqual("[]", base.to_json_string(None))
-        self.assertEqual("[]", base.to_json_string([]))
+        self.assertEqual("[]", Base.to_json_string(None))
+        self.assertEqual("[]", Base.to_json_string({}))
         self.assertEqual('[{"hello": 1, "world": 2}]',
-                         base.to_json_string([{'hello': 1, 'world': 2}]))
+                         Base.to_json_string([{'hello': 1, 'world': 2}]))
 
     def test_save_to_file_method(self):
         """

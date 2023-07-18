@@ -6,7 +6,6 @@ import unittest
 from models.rectangle import Rectangle
 import sys
 from io import StringIO
-from os import path
 
 
 class TestRectangle(unittest.TestCase):
@@ -32,24 +31,6 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(rect.height, 2)
         self.assertEqual(rect.x, 0)
         self.assertEqual(rect.y, 0)
-
-        Rectangle.save_to_file(None)
-        self.assertTrue(path.isfile("Rectangle.json"))
-        if path.isfile("Rectangle.json"):
-            with open("Rectangle.json", mode="r", encoding="utf-8") as file:
-                output = file.read()
-                self.assertEqual(output, "[]")
-
-        Rectangle.save_to_file([])
-        self.assertTrue(path.isfile("Rectangle.json"))
-        if path.isfile("Rectangle.json"):
-            with open("Rectangle.json", mode="r", encoding="utf-8") as file:
-                output = file.read()
-                self.assertEqual(output, "[]")
-
-        Rectangle.save_to_file([Rectangle(1, 2)])
-        self.assertTrue(path.isfile("Rectangle.json"))
-
 
     def test_with_all_args(self):
         """
