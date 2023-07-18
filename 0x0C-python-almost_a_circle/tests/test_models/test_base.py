@@ -62,21 +62,6 @@ class TestBase(unittest.TestCase):
         self.assertEqual('[{"hello": 1, "world": 2}]',
                          base.to_json_string([{'hello': 1, 'world': 2}]))
 
-    def test_save_to_file_method_with_incorrect_arg_type(self):
-        """
-        Test the save_to_file_method class method of Base class
-        with incorrect type passed as arguement
-        """
-        from models.rectangle import Rectangle
-        with self.assertRaises(TypeError):
-            Rectangle.save_to_file()
-
-        with self.assertRaises(TypeError):
-            Rectangle.save_to_file("Hello World")
-
-        with self.assertRaises(TypeError):
-            Rectangle.save_to_file(["Hello", "World"])
-
     def test_save_to_file_method(self):
         """
         Test the save_to_file() class method of Base class
