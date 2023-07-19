@@ -1,211 +1,111 @@
 #!/usr/bin/python3
-"""
-This module provides a test suite for Base class
-"""
+""" This module defines a test class for the Base class """
 import unittest
 from models.base import Base
 from models.rectangle import Rectangle
 from models.square import Square
-from os import path
 
 
 class TestBase(unittest.TestCase):
-    """
-    Test suite for Base class
-    """
-    def test_with_no_arg(self):
-        """
-        Test with no argument passed to Base class
-        """
+
+    def test_single_obj_with_id(self):
+        base = Base(10)
+        self.assertEqual(10, base.id)
+
+    def test_single_obj_without_id(self):
         base = Base()
-        self.assertEqual(20, base.id)
+        self.assertEqual(7, base.id)
 
-    def test_with_one_arg(self):
-        """
-        Test with one argument passed to Base class
-        """
-        base = Base(3)
-        self.assertEqual(base.id, 3)
-        base = Base(4)
-        self.assertEqual(base.id, 4)
+    def test_two_obj_with_id(self):
+        base = Base(10)
+        base2 = Base(5)
+        self.assertEqual(5, base2.id)
 
-    def test_with_more_than_one_arg(self):
-        """
-        Test with more than one argument passed to Base class
-        """
-        with self.assertRaises(TypeError):
-            base = Base(2, 4)
-
-    def test_to_json_string_method_with_incorrect_arg_type(self):
-        """
-        Test the to_json_string() static method of Base class with incorrect
-        argument type
-        """
-        with self.assertRaises(TypeError):
-            Base.to_json_string()
-
-        with self.assertRaises(TypeError):
-            Base.to_json_string("Hello")
-
-        with self.assertRaises(TypeError):
-            Base.to_json_string([2, 2])
-
-    def test_to_json_string_method_return_type(self):
-        """
-        Test the return type of the to_json_string() static method of
-        Base class
-        """
-        self.assertIsInstance(Base.to_json_string([{2: 3, 3: 4}]), str)
-
-    def test_to_json_string_method_return_value(self):
-        """
-        Test the return value of the to_json_string() static method of
-        Base class
-        """
-        self.assertEqual("[]", Base.to_json_string(None))
-        self.assertEqual("[]", Base.to_json_string({}))
-        self.assertEqual('[{"hello": 1, "world": 2}]',
-                         Base.to_json_string([{'hello': 1, 'world': 2}]))
-
-    def test_save_to_file_method(self):
-        """
-        Test the save_to_file() class method of Base class
-        """
-        Rectangle.save_to_file(None)
-        self.assertTrue(path.isfile("Rectangle.json"))
-        if path.isfile("Rectangle.json"):
-            with open("Rectangle.json", mode="r", encoding="utf-8") as file:
-                output = file.read()
-                self.assertEqual(output, "[]")
-
-        Rectangle.save_to_file([])
-        self.assertTrue(path.isfile("Rectangle.json"))
-        if path.isfile("Rectangle.json"):
-            with open("Rectangle.json", mode="r", encoding="utf-8") as file:
-                output = file.read()
-                self.assertEqual(output, "[]")
-
-        Rectangle.save_to_file([Rectangle(1, 2)])
-        self.assertTrue(path.isfile("Rectangle.json"))
-
-        r1 = Rectangle(10, 7, 2, 8, 3)
-        r2 = Rectangle(2, 4, id=4)
-        Rectangle.save_to_file([r1, r2])
-        self.assertTrue(path.isfile("Rectangle.json"))
-
-        s1 = Square(10, 7, 2, 8)
-        s2 = Square(2, 4, id=4)
-        Square.save_to_file([s1, s2])
-        self.assertTrue(path.isfile("Square.json"))
-
-    def test_from_json_string(self):
-        """
-        Test the from_json_string() static method of Base class
-        """
+    def test_two_obj_with_first_id(self):
         base = Base(5)
+        base2 = Base()
+        self.assertEqual(9, base2.id)
 
-        with self.assertRaises(TypeError):
-            base.from_json_string()
+    def test_two_obj_with_second_id(self):
+        base = Base()
+        base2 = Base(3)
+        self.assertEqual(3, base2.id)
 
-        with self.assertRaises(TypeError):
-            base.from_json_string(2)
+    def test_two_obj_without_ids(self):
+        base = Base()
+        base2 = Base()
+        self.assertEqual(12, base2.id)
 
-        output = base.from_json_string(None)
-        self.assertListEqual(output, [])
+    def test_single_obj_with_neg_id(self):
+        base = Base(-5)
+        self.assertEqual(-5, base.id)
 
-        json_string = "[2, 4, 6, 8]"
-        output = base.from_json_string(json_string)
-        self.assertListEqual(output, [2, 4, 6, 8])
+    def test_two_obj_with_neg_ids(self):
+        base = Base(-1)
+        base2 = Base(-2)
+        self.assertEqual(-2, base2.id)
 
-    def test_create_method_with_incorrect_type_in_dictionary(self):
-        """
-        Test the create() class method of Base class with incorrect types in
-        the dictionary
-        """
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "width": "Hello"}
-            rect = Rectangle.create(**dictionary)
+    def test_to_json_string_with_valid_dictionary(self):
+        rect = Rectangle(10, 7, 2, 8, 1)
+        dictionary = rect.to_dictionary()
+        json_dictionary = Base.to_json_string([dictionary])
+        self.assertEqual(sorted('[{"x": 2, "width": 10, "id": 1, "height": 7'
+                                ', "y": 8}]'), sorted(json_dictionary))
 
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "width": 3, "height": []}
-            rect = Rectangle.create(**dictionary)
+    def test_to_json_string_with_argument_none(self):
+        json_string = Base.to_json_string(None)
+        self.assertEqual("[]", json_string)
 
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "width": 3, "height": 3, "x": "World"}
-            rect = Rectangle.create(**dictionary)
+    def test_to_json_string_with_empty_dictionary(self):
+        json_string = Base.to_json_string({})
+        self.assertEqual("[]", json_string)
 
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "width": 3, "height": 3, "x": 0, "y": "Hi"}
-            rect = Rectangle.create(**dictionary)
+    def test_from_json_string_from_valid_string(self):
+        list_input = [
+            {'id': 89, 'width': 10, 'height': 4},
+            {'id': 7, 'width': 1, 'height': 7}
+        ]
+        json_str = Rectangle.to_json_string(list_input)
+        output = Rectangle.from_json_string(json_str)
+        self.assertEqual(list_input, output)
 
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "size": "Hello"}
-            square = Square.create(**dictionary)
+    def test_from_json_string_from_none(self):
+        output = Rectangle.from_json_string(None)
+        self.assertEqual([], output)
 
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "size": 3, "x": "World"}
-            square = Square.create(**dictionary)
+    def test_from_json_string_from_empty(self):
+        output = Rectangle.from_json_string("")
+        self.assertEqual([], output)
 
-        with self.assertRaises(TypeError):
-            dictionary = {"id": 21, "size": 3, "x": 0, "y": "Hi"}
-            square = Square.create(**dictionary)
+    def test_create_rectangle(self):
+        rect = Rectangle(3, 5, 1, 1)
+        obj_dict = rect.to_dictionary()
+        rect2 = Rectangle.create(**obj_dict)
+        self.assertEqual("[Rectangle] (1) 1/1 - 3/5", str(rect2))
 
-    def test_create_method_with_incorrect_values(self):
-        """
-        Test the create() classs method of Base class with incorrect values
-        in the dictionary
-        """
+    def test_create_square(self):
+        square = Square(3, 5, 1, 1)
+        obj_dict = square.to_dictionary()
+        square2 = Square.create(**obj_dict)
+        self.assertEqual("[Square] (1) 5/1 - 3", str(square2))
+
+    def test_rectangle_load_from_file(self):
+        Rectangle.save_to_file([Rectangle(10, 7, 2, 8, 1), Rectangle(2, 4)])
+        actual = Rectangle.load_from_file()
+        self.assertEqual(2, len(actual))
+
+    def test_square_load_from_file(self):
+        Square.save_to_file([Square(5, 1, 1, 1)])
+        actual = Square.load_from_file()
+        self.assertEqual(1, len(actual))
+
+    def test_save_to_file_with_none(self):
+        text = ""
+        Square.save_to_file(None)
+        with open("Square.json") as file:
+            text = file.read()
+        self.assertEqual("[]", text)
+
+    def test_save_to_file_with_empty_list(self):
         with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "width": -3}
-            rect = Rectangle.create(**dictionary)
-
-        with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "width": 3, "height": 0}
-            rect = Rectangle.create(**dictionary)
-
-        with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "width": 3, "height": 0, "x": -1}
-            rect = Rectangle.create(**dictionary)
-
-        with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "width": 3, "height": 0, "x": 1, "y": -2}
-            rect = Rectangle.create(**dictionary)
-
-        with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "size": -3}
-            square = Square.create(**dictionary)
-
-        with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "size": 3, "x": -1}
-            square = Square.create(**dictionary)
-
-        with self.assertRaises(ValueError):
-            dictionary = {"id": 21, "size": 3, "x": 1, "y": -2}
-            square = Square.create(**dictionary)
-
-    def test_create_method(self):
-        """
-        Test the create() class method of Base class
-        """
-        dictionary = {"id": 21, "width": 3, "height": 2, "x": 1, "y": 1}
-        rect = Rectangle.create(**dictionary)
-        self.assertEqual(rect.id, 21)
-        self.assertEqual(rect.width, 3)
-        self.assertEqual(rect.height, 2)
-        self.assertEqual(rect.x, 1)
-        self.assertEqual(rect.y, 1)
-
-        dictionary = {"id": 33, "size": 2, "x": 5, "y": 3}
-        square = Square.create(**dictionary)
-        self.assertEqual(square.id, 33)
-        self.assertEqual(square.size, 2)
-        self.assertEqual(square.x, 5)
-        self.assertEqual(square.y, 3)
-
-    def test_load_from_file(self):
-        """
-        Test the load_from_file() class method of Base class
-        """
-        rect = Rectangle.load_from_file()
-
-        self.assertIsInstance(rect, list)
+            Square.save_to_file([])
