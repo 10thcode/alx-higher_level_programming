@@ -142,10 +142,11 @@ class Rectangle(Base):
         """
         Prints a rectangle with the character #
         """
-        n = print("{}".format(
+        print("{}".format(
             (("\n" * self.y) + ((" " * self.x) + ("#" * self.width) + "\n")
              * self.height)), end="")
-        return n
+
+        return True
 
     def update(self, *args, **kwargs):
         """
