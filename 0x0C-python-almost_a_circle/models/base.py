@@ -59,11 +59,9 @@ class Base():
         filename = cls.__name__ + ".json"
 
         if list_objs is not None:
-            if len(list_objs) == 0:
-                raise ValueError()
-
-            for item in list_objs:
-                list_dictionaries.append(item.to_dictionary())
+            if len(list_objs) != 0:
+                for item in list_objs:
+                    list_dictionaries.append(item.to_dictionary())
 
         with open(filename, mode="w") as file:
             file.write(Base.to_json_string(list_dictionaries))

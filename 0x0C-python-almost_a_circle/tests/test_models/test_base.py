@@ -4,6 +4,7 @@ import unittest
 from models.base import Base
 from models.rectangle import Rectangle
 from models.square import Square
+from os.path import isfile
 
 
 class TestBase(unittest.TestCase):
@@ -99,13 +100,10 @@ class TestBase(unittest.TestCase):
         actual = Square.load_from_file()
         self.assertEqual(1, len(actual))
 
-    def test_save_to_file_with_none(self):
+    def test_save_to_file_in_base_with_none(self):
         text = ""
         Square.save_to_file(None)
+        self.assertTrue(isfile("Square.json"))
         with open("Square.json") as file:
             text = file.read()
         self.assertEqual("[]", text)
-
-    def test_save_to_file_with_empty_list(self):
-        with self.assertRaises(ValueError):
-            Square.save_to_file([])
