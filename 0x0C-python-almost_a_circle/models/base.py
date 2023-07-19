@@ -66,7 +66,7 @@ class Base():
                 list_dictionaries.append(item.to_dictionary())
 
         with open(filename, mode="w") as file:
-            file.write(cls.to_json_string(list_dictionaries))
+            file.write(Base.to_json_string(list_dictionaries))
 
     @staticmethod
     def from_json_string(json_string):
