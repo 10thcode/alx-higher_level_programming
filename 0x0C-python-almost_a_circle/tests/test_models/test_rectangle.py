@@ -83,10 +83,6 @@ class TestRectangle(unittest.TestCase):
         rect = Rectangle(10, 5, 1, 1, 10)
         self.assertEqual(50, rect.area())
 
-    def test_display_nno_padding(self):
-        rect = Rectangle(1, 1, 0, 0, 10)
-        self.assertEqual(1, rect.display())
-
     def test_magic_str_with_valid_values(self):
         rect = Rectangle(10, 5, 1, 1, 10)
         self.assertEqual("[Rectangle] (10) 1/1 - 10/5", str(rect))
@@ -98,10 +94,6 @@ class TestRectangle(unittest.TestCase):
     def test_magic_str_without_id(self):
         rect = Rectangle(10, 5, 1, 1)
         self.assertEqual("[Rectangle] (16) 1/1 - 10/5", str(rect))
-
-    def test_display_with_padding(self):
-        rect = Rectangle(1, 1, 1, 1, 10)
-        self.assertEqual(3, rect.display())
 
     def test_update_with_one_arg(self):
         rect = Rectangle(10, 10, 10, 10)

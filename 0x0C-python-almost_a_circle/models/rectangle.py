@@ -142,9 +142,10 @@ class Rectangle(Base):
         """
         Prints a rectangle with the character #
         """
-        print("{}".format(
+        n = print("{}".format(
             (("\n" * self.y) + ((" " * self.x) + ("#" * self.width) + "\n")
              * self.height)), end="")
+        return n
 
     def update(self, *args, **kwargs):
         """
@@ -153,7 +154,7 @@ class Rectangle(Base):
         Args:
             args (tuple): Values used to update the fields in Rectangle class
         """
-        if args:
+        if len(args) > 0 and type(args[0]) is int:
             try:
                 self.id = args[0]
             except IndexError:

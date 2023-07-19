@@ -59,7 +59,7 @@ class Square(Rectangle):
         Args:
             args (tuple): Values used to update the fields in Square class
         """
-        if args:
+        if len(args) > 0 and type(args[0]) is int:
             try:
                 self.id = args[0]
             except IndexError:
