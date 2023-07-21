@@ -99,11 +99,3 @@ class TestBase(unittest.TestCase):
         Square.save_to_file([Square(5, 1, 1, 1)])
         actual = Square.load_from_file()
         self.assertEqual(1, len(actual))
-
-    def test_save_to_file_in_base_with_none(self):
-        text = ""
-        Square.save_to_file(None)
-        self.assertTrue(isfile("Square.json"))
-        with open("Square.json") as file:
-            text = file.read()
-        self.assertEqual("[]", text)

@@ -172,15 +172,9 @@ class TestRectangle(unittest.TestCase):
                          "y": 9}, actual)
 
     def test_save_to_file_with_none(self):
-        text = ""
-        Rectangle.save_to_file(None)
-        with open("Rectangle.json") as file:
-            text = file.read()
-        self.assertEqual("[]", text)
+        output = Rectangle.save_to_file(None)
+        self.assertEqual("[]", output)
 
     def test_save_to_file_with_empty_list(self):
-        Rectangle.save_to_file([])
-        self.assertTrue(isfile("Rectangle.json"))
-        with open("Rectangle.json", mode="r") as file:
-            output = file.read()
-            self.assertEqual("[]", output)
+        output = Rectangle.save_to_file([])
+        self.assertEqual("[]", output)

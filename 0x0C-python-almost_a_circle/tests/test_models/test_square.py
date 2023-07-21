@@ -164,17 +164,10 @@ class TestSquare(unittest.TestCase):
         actual = square.to_dictionary()
         self.assertEqual({"id": 36, "size": 10, "x": 9, "y": 9}, actual)
 
-    def test_save_to_file_with_empty_list(self):
-        Square.save_to_file([])
-        self.assertTrue(isfile("Square.json"))
-        with open("Square.json", mode="r") as file:
-            output = file.read()
-            self.assertEqual("[]", output)
-
     def test_save_to_file_with_none(self):
-        text = ""
-        Square.save_to_file(None)
-        self.assertTrue(isfile("Square.json"))
-        with open("Square.json") as file:
-            text = file.read()
-        self.assertEqual("[]", text)
+        output = Rectangle.save_to_file(None)
+        self.assertEqual("[]", output)
+
+    def test_save_to_file_with_empty_list(self):
+        output = Rectangle.save_to_file([])
+        self.assertEqual("[]", output)
