@@ -1,6 +1,8 @@
 
 # 0x13. JavaScript - Objects, Scopes and Closures
 
+JavaScript - Objects, scopes, closures and working with files.
+
 ## Tasks
 
 - ***[0-rectangle.js](https://github.com/10thcode/alx-higher_level_programming/blob/main/0x13-javascript_objects_scopes_closures/0-rectangle.js)***
