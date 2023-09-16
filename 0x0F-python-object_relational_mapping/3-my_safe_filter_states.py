@@ -21,8 +21,8 @@ if __name__ == '__main__':
     )
 
     cursor = db.cursor()
-    statement = "SELECT * FROM states WHERE name = '{}' ORDER BY id"
-    cursor.execute(statement.format(state))
+    statement = "SELECT * FROM states WHERE name = %s ORDER BY id"
+    cursor.execute(statement, (state,))
     result = cursor.fetchall()
     for row in result:
         print(row)
