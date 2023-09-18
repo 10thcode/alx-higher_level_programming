@@ -21,7 +21,7 @@ if __name__ == '__main__':
     )
 
     cursor = db.cursor()
-    statement = "SELECT * FROM states WHERE name = '{}' ORDER BY id"
+    statement = "SELECT * FROM states WHERE BINARY name = '{}' ORDER BY id"
     cursor.execute(statement.format(state))
     result = cursor.fetchall()
     for row in result:
