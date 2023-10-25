@@ -8,7 +8,6 @@ request(url, (error, response, body) => {
   if (error) {
     console.log(error);
   } else {
-    const result = body.json();
-    console.log(result.title);
+    console.log(JSON.parse(body).title);
   }
 });
